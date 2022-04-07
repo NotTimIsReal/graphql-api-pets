@@ -3,8 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import {TypeOrmModule} from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { PetModule } from './pet/pet.module';
+import Config from './typeorm.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,13 +14,9 @@ import { PetModule } from './pet/pet.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
-
     }),
-    TypeOrmModule.forRoot({
-
-    }),
-    PetModule
-
+    TypeOrmModule.forRoot(Config),
+    PetModule,
   ],
 })
 export class AppModule {}
